@@ -263,10 +263,6 @@
 
         <div class="controls">
             <input type="text" class="search-box" placeholder="ابحث عن اسم..." id="searchBox">
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">الكل</button>
-                <button class="filter-btn" data-filter="has-children">العائلات مع أطفال</button>
-            </div>
         </div>
 
         <div class="tree" id="familyTree">
@@ -555,18 +551,6 @@
         
         // Add search functionality
         document.getElementById('searchBox').addEventListener('input', searchTree);
-        
-        // Add filter functionality
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                // Update active button
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                
-                // Apply filter
-                filterFamilies(e.target.getAttribute('data-filter'));
-            });
-        });
     </script>
 </body>
 </html>
