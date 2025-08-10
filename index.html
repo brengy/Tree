@@ -482,14 +482,15 @@
             
             // Reset family unit visibility
             familyUnits.forEach(unit => {
-                unit.style.opacity = '1';
-                unit.style.transform = 'scale(1)';
+                unit.classList.remove('hidden');
+                unit.style.opacity = '';
+                unit.style.transform = '';
             });
             
             if (searchTerm) {
                 let hasResults = false;
                 
-                // Highlight matching elements and fade non-matching families
+                // Highlight matching elements and hide non-matching families
                 familyUnits.forEach(unit => {
                     const elements = unit.querySelectorAll('.parent, .child');
                     let hasMatch = false;
@@ -503,8 +504,7 @@
                     });
                     
                     if (!hasMatch) {
-                        unit.style.opacity = '0.3';
-                        unit.style.transform = 'scale(0.95)';
+                        unit.classList.add('hidden');
                     }
                 });
                 
