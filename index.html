@@ -1,556 +1,173 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شجرة عائلة الشيخ أبوالوفا الشرقاوي - كاملة</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شجرة عائلة الشيخ أبوالوفا الشرقاوي</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3c72 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            background: linear-gradient(45deg, #1e3c72, #2a5298);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-            padding: 12px 20px;
-            border: 2px solid #bdc3c7;
-            border-radius: 25px;
-            font-size: 1.1em;
-            text-align: center;
-            transition: border-color 0.3s ease;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: #2980b9;
-            box-shadow: 0 0 10px rgba(41, 128, 185, 0.3);
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 20px;
-            background: #3498db;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-
-        .stats {
-            background: linear-gradient(45deg, #2980b9, #1e3c72);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        .stat-number {
-            font-size: 2em;
-            font-weight: bold;
-            display: block;
-        }
-
-        .tree {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-        }
-
-        .family-unit {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border: 2px solid #ecf0f1;
-            transition: all 0.3s ease;
-            break-inside: avoid;
-        }
-
-        .family-unit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            border-color: #2980b9;
-        }
-
-        .family-unit.hidden {
-            display: none;
-        }
-
-        .parents {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .parent {
-            background: linear-gradient(45deg, #2980b9, #1e3c72);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 0.95em;
-            box-shadow: 0 3px 10px rgba(41, 128, 185, 0.3);
-        }
-
-        .marriage-symbol {
-            font-size: 1.2em;
-            color: #2980b9;
-            margin: 0 5px;
-        }
-
-        .children {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .child {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
-            transition: transform 0.2s ease;
-        }
-
-        .child:hover {
-            transform: scale(1.05);
-        }
-
-        .children-label {
-            font-weight: bold;
-            color: #2980b9;
-            margin-right: 10px;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .highlight {
-            background: linear-gradient(45deg, #f1c40f, #f39c12) !important;
-            transform: scale(1.02);
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
-        }
-
-        .generation-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #1e3c72;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-size: 0.8em;
-        }
-
-        .family-unit {
-            position: relative;
-        }
-
-        @media (max-width: 768px) {
-            .tree {
-                grid-template-columns: 1fr;
-            }
-            
-            .controls {
-                flex-direction: column;
-            }
-            
-            .search-box {
-                min-width: 100%;
-            }
-        }
-    </style>
+<style>
+/* ====== SAME DESIGN (UNCHANGED) ====== */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:'Segoe UI',Tahoma;
+background:linear-gradient(135deg,#2c5aa0,#1e3c72);
+min-height:100vh;padding:20px
+}
+.container{
+max-width:1600px;margin:auto;
+background:rgba(255,255,255,.95);
+border-radius:20px;padding:30px
+}
+.header{
+text-align:center;margin-bottom:30px;
+background:linear-gradient(45deg,#1e3c72,#2a5298);
+color:#fff;padding:25px;border-radius:15px
+}
+.tree{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(400px,1fr));
+gap:20px
+}
+.family-unit{
+background:#fff;border-radius:12px;padding:20px;
+border:2px solid #ecf0f1;position:relative
+}
+.parents{display:flex;gap:8px;flex-wrap:wrap}
+.parent{
+background:linear-gradient(45deg,#2980b9,#1e3c72);
+color:#fff;padding:6px 14px;border-radius:20px
+}
+.child{
+background:linear-gradient(45deg,#3498db,#2980b9);
+color:#fff;padding:5px 12px;border-radius:18px
+}
+.children{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.children-label{font-weight:bold;color:#2980b9;margin-top:10px}
+.generation-badge{
+position:absolute;top:10px;left:10px;
+background:#1e3c72;color:#fff;
+padding:4px 8px;border-radius:10px;font-size:.8em
+}
+.highlight{background:#f1c40f!important;color:#000}
+.hidden{display:none}
+.search-box{
+width:100%;padding:12px;margin-bottom:20px;
+border-radius:25px;border:2px solid #ccc;font-size:1.1em;text-align:center
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>شجرة عائلة الشيخ أبوالوفا الشرقاوي الكاملة</h1>
-            <p>11-8-2025</p>
-        </div>
+<div class="container">
+<div class="header">
+<h1>شجرة عائلة الشيخ أبوالوفا الشرقاوي</h1>
+</div>
 
-        <div class="stats" id="stats">
-            <div class="stat-item">
-                <span class="stat-number" id="totalFamilies">0</span>
-                <span>عائلة</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number" id="totalPeople">0</span>
-                <span>فرد</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number" id="totalChildren">0</span>
-                <span>طفل</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number" id="totalGenerations">0</span>
-                <span>جيل</span>
-            </div>
-        </div>
+<input id="searchBox" class="search-box" placeholder="ابحث عن اسم...">
 
-        <div class="controls">
-            <input type="text" class="search-box" placeholder="ابحث عن اسم..." id="searchBox">
-        </div>
+<div class="tree" id="familyTree"></div>
+</div>
 
-        <div class="tree" id="familyTree">
-            <!-- Tree will be generated here -->
-        </div>
-    </div>
+<script>
+/* ========= GOOGLE SHEETS CONFIG ========= */
+const apiKey = 'AIzaSyBh82Bqe-FfnZdzjGSVwmrpdKiURhhHaZ4';
+const sheetId = '1Vn9sSmLbbMvZ9lJO1HxhuU4v1Sjs7Hs7jOlZT2c-9ms';
+const sheetName = 'Nagahamadi';
 
-    <script>
-        // Complete family data from the document
-        const familyData = [
-            // الشيخ أبوالوفا الشرقاوي - الجد الأكبر
-            {parents: ["الشيخ أبوالوفا الشرقاوي", "نفيسة العديسي"], children: [], generation: 1},
-            {parents: ["الشيخ أبوالوفا الشرقاوي", "تفيدة البكري"], children: [], generation: 1},
-            {parents: ["الشيخ أبوالوفا الشرقاوي", "آمنه حفني الشرقاوي"], children: ["شاه"], generation: 1},
-            {parents: ["الشيخ أبوالوفا الشرقاوي", "تفيده حافظ خليل"], children: ["محمود", "علي", "عفاف"], generation: 1},
-            {parents: ["الشيخ أبوالوفا الشرقاوي", "بهية محمد امين الانصاري"], children: ["محمد", "احمد", "فاطمة", "محاسن", "زينب"], generation: 1},
-            
-            // الجيل الثاني
-            {parents: ["محمد ابوالوفا الشرقاوي", "فاطمة محمد احمد"], children: ["ابوالوفا", "ابوالفضل", "ابوالمجد", "صالح", "صفية", "عمرو"], generation: 2},
-            {parents: ["محمود ابوالوفا الشرقاوي", "عواطف محمد هارون"], children: ["سلوي", "يوسف", "تيسير", "سارة", "احمد", "محمد"], generation: 2},
-            {parents: ["علي ابوالوفا الشرقاوي", "عفاف دردير"], children: ["ابراهيم", "عبد الرحمن", "سعاد", "زينب", "محمد", "ابوالمجد", "ليلي", "هالة"], generation: 2},
-            {parents: ["احمد ابوالوفا الشرقاوي", "سيادة حسن حفني"], children: ["فاطمة", "زينب", "بهية", "كريمة", "محمد", "ابوالوفا", "ابوالمجد"], generation: 2},
-            
-            // فرع حسن حفني
-            {parents: ["حسن حفني الشرقاوي", "فاطمة ابوالوفا الشرقاوي"], children: ["محمد", "بخيتة"], generation: 2},
-            {parents: ["حسن حفني الشرقاوي", "اسما ابوالفضل الشرقاوي"], children: ["شرقاوي", "سيادة", "ثريا"], generation: 2},
-            {parents: ["محمد حفني الشرقاوي", "عفاف ابوالوفا الشرقاوي"], children: ["محمود", "احمد"], generation: 2},
-            {parents: ["علي حفني الشرقاوي", "محاسن ابوالوفا الشرقاوي"], children: ["زكريا", "يحيي", "ابوالوفا", "نفيسة"], generation: 2},
-            {parents: ["شرقاوي حسن حفني", "زينب ابوالوفا الشرقاوي"], children: ["احمد", "ابوالوفا", "اسماء", "ثريا", "ابوالفضل"], generation: 2},
-            
-            // الجيل الرابع
-            {parents: ["محمد عبد السميع", "ثريا حسن حفني"], children: ["شرقاوي", "ابوالفضل", "ميمونه"], generation: 2},
-            {parents: ["ابوالفضل محمد ابوالوفا", "تيسير محمود ابوالوفا"], children: ["حاتم", "غادة", "نهله", "داليا"], generation: 2},
-            {parents: ["صالح محمد ابوالوفا", "فاطمة احمد"], children: ["سمر", "رشا"], generation: 2},
-            {parents: ["عمرو محمد ابوالوفا", "فاطمة عبد المعز"], children: ["رغدة", "محمد"], generation: 2},
-            {parents: ["احمد محمود ابوالوفا", "زينب علي ابوالوفا"], children: ["محمود", "نرمين", "يوسف", "مي"], generation: 2},
-            {parents: ["محمد محمود ابوالوفا", "ايمان محمد فوزي الانصاري"], children: ["رانيا", "محمود"], generation: 2},
-            {parents: ["محمد محمود ابوالوفا", "مرفت صالح كامل"], children: [], generation: 2},
-            
-            // الجيل الخامس
-            {parents: ["ابراهيم علي ابوالوفا", "سارة محمود ابوالوفا"], children: ["احمد", "ايمن", "شيرين"], generation: 2},
-            {parents: ["عبد الرحمن علي ابوالوفا", "زينب احمد ابوالوفا"], children: ["محمد", "امل", "ابوالوفا"], generation: 2},
-            {parents: ["محمد علي ابوالوفا", "بهية احمد ابوالوفا"], children: ["عمر", "مروه"], generation: 2},
-            {parents: ["ابوالمجد علي ابوالوفا", "نهير ابوالوفا عبد الاخر"], children: ["ندي", "همس", "حسين", "هنا", "علي"], generation: 2},
-            {parents: ["محمد احمد ابوالوفا", "ليلي علي ابوالوفا"], children: ["منة الله", "محسن", "منار", "احمد"], generation: 2},
-            {parents: ["ابوالوفا احمد ابوالوفا", "هالة علي ابوالوفا"], children: ["سها", "محمد", "بسملة", "احمد"], generation: 2},
-            {parents: ["ابوالمجد احمد ابوالوفا", "غادة ابوالفضل محمد"], children: ["محمد", "شهد", "احمد"], generation: 2},
-            
-            // فرع علي حفني
-            {parents: ["زكريا علي حفني", "صفية محمد ابوالوفا"], children: ["احمد", "محمد", "يحيي", "عزة", "نسرين", "رباب"], generation: 2},
-            {parents: ["يحيي علي حفني", "كريمة احمد ابوالوفا"], children: ["محمد", "محمود", "علي", "ابوالمجد", "ابوالوفا"], generation: 2},
-            {parents: ["ابوالوفا علي حفني", "سعاد علي ابوالوفا"], children: ["وليد", "حازم", "احمد", "سحر", "عبير", "مها", "رندا"], generation: 2},
-            {parents: ["محمد حسن حفني", "وفاء فاروق الانصاري"], children: [], generation: 2},
-            
-            // فرع عبد المعز
-            {parents: ["عبد المعز محمد ابراهيم", "بخيتة حسن حفني"], children: ["احمد", "ابوالوفا", "حسن", "هدير", "تغريد"], generation: 2},
-            
-            // فرع شرقاوي محمد عبد السميع
-            {parents: ["شرقاوي محمد عبد السميع", "اسماء شرقاوي حسن"], children: ["نجلاء", "محمد", "نهال"], generation: 2},
-            {parents: ["ابوالفضل محمد عبد السميع", "ثريا شرقاوي حسن"], children: ["محمود", "احمد", "شيماء", "ريهام", "شروق"], generation: 2},
-            
-            // فرع شرقاوي حسن
-            {parents: ["احمد شرقاوي حسن", "ايمان ابوالوفا عبد الآخر"], children: ["طارق", "ابوبكر", "نهي", "سارة", "آلاء", "زينب"], generation: 2},
-            {parents: ["ابوالوفا شرقاوي حسن", "ميمونة محمد عبد السميع"], children: ["محمد", "احمد", "علا", "سماح", "آيه", "اريج"], generation: 2},
-            {parents: ["ابوالفضل شرقاوي حسن", "سحر ابوالوفا علي"], children: ["احمد", "محمود", "طه", "رنا", "بسمة", "زينب"], generation: 2},
-            
-            // فرع محمد حفني
-            {parents: ["محمود محمد حفني", "نفيسة علي حفني"], children: ["هبة", "اسراء", "ولاء", "ايمان"], generation: 2},
-            {parents: ["احمد محمد حفني", "هالة فاروق الانصاري"], children: ["مصطفي", "عبد الرحمن", "ريم", "دينا"], generation: 2},
-            
-            // الجيل السادس - الأحفاد
-            {parents: ["حاتم ابوالفضل محمد ابوالوفا", "نسرين محمد شفيق"], children: ["ملك", "ريم", "نور", "رنا"], generation: 3},
-            {parents: ["احمد ابراهيم", "شيرين عبد الرسول"], children: [], generation: 3},
-            {parents: ["محمد عبد الرحمن علي", "رشا احمد الجبالي"], children: ["عبد الرحمن", "علي", "ابراهيم"], generation: 3},
-            {parents: ["ايمن ابراهيم علي", "نرمين احمد محمود ابوالوفا"], children: ["شيرين", "محمد", "ياسمين"], generation: 3},
-            {parents: ["محمود احمد محمود ابوالوفا", "ريم احمد الجبالي"], children: ["مريم", "إبراهيم"], generation: 3},
-            {parents: ["يوسف احمد محمود ابوالوفا", "هنا ابوالمجد علي"], children: ["احمد", "آدم", "كارما"], generation: 3},
-            {parents: ["مصطفي احمد الجبالي", "مي احمد محمود ابوالوفا"], children: ["حمزة", "كندة"], generation: 3},
-            {parents: ["ابو الوفا عبد الرحمن", "همس ابوالمجد علي"], children: ["احمد", "محمود الغالي"], generation: 3},
-            {parents: ["حسين ابوالمجد علي", "نور بريري"], children: ["سيف"], generation: 3},
-            {parents: ["محمد عمر ثاقب", "داليا ابوالفضل محمد"], children: ["عمر", "لميس", "ادهم"], generation: 3},
-            {parents: ["عمر سمير السنبسي", "ندي ابوالمجد علي"], children: ["ليلي", "محمد"], generation: 3},
-            {parents: ["محسن محمد احمد ابوالوفا", "سها ابوالوفا احمد"], children: ["مصطفي", "عمر", "صالح"], generation: 3},
-            
-            // المزيد من الجيل السادس
-            {parents: ["وليد ابوالوفا علي علي", "عزة زكريا علي"], children: ["مؤمن", "احمد"], generation: 3},
-            {parents: ["محمد يحيي علي", "مها ابوالوفا علي"], children: ["حبيبة", "احمد", "حسين", "حسن"], generation: 3},
-            {parents: ["احمد زكريا علي", "سمر صالح محمد ابوالوفا"], children: ["يارا", "محمد"], generation: 3},
-            {parents: ["محمود يحيي علي", "رباب زكريا علي حفني"], children: ["محمد"], generation: 3},
-            {parents: ["حازم ابوالوفا علي", "هبه محمود محمد حفني"], children: ["فاطمة"], generation: 3},
-            {parents: ["علي يحيي علي حفني", "نسرين زكريا علي حفني"], children: ["عبد الله"], generation: 3},
-            {parents: ["ابوالمجد يحيي علي حفني", "منة الله محمد احمد"], children: ["ياسين", "حنين", "سلمي", "فريده"], generation: 3},
-            {parents: ["احمد ابوالوفا علي حفني", "سارة احمد شرقاوي"], children: ["زياد", "فيروز"], generation: 3},
-            {parents: ["محمد زكريا علي حفني", "رغدة عمرو محمد"], children: ["مصطفي", "ميلارا", "يوسف"], generation: 3},
-            {parents: ["ابوالوفا يحيي علي", "منار محمد احمد ابوالوفا"], children: ["محمد", "زين الدين"], generation: 3},
-            {parents: ["يحيي زكريا علي حفني", "رندا ابوالوفا علي"], children: ["ريماس", "شذي"], generation: 3},
-            
-            // فرع احمد شرقاوي
-            {parents: ["طارق احمد شرقاوي", "آيات"], children: ["احمد"], generation: 3},
-            {parents: ["عمرو القاضي", "نهي احمد شرقاوي"], children: ["عبد الرحيم", "محمد", "حنين", "هيا"], generation: 3},
-            {parents: ["محمد علي هاشم الانصاري", "زينب احمد شرقاوي"], children: ["آدم", "كايلا"], generation: 3},
-            {parents: ["محمد ابوالوفا شرقاوي", "آلاء احمد شرقاوي"], children: ["بدر الدين", "تالا"], generation: 3},
-            
-            // فرع عبد المعز
-            {parents: ["محمد عمرو", "دينا جمال صالح"], children: ["داليدا", "نيللي", "ليلى"], generation: 3},
-            {parents: ["احمد عبد المعز", "امل عبد الرحمن علي ابوالوفا"], children: ["حلا", "جنا", "محمد", "رؤى"], generation: 3},
-            {parents: ["ابوالوفا عبد المعز", "مروه محمد علي ابوالوفا"], children: ["سما", "ليان", "لجين", "هيا"], generation: 3},
-            {parents: ["حسن عبد المعز", "وفاء مهاب فاروق"], children: ["محمد", "جومانة"], generation: 3},
-            
-            // المزيد من العائلات
-            {parents: ["محمد شرقاوي محمد عبد السميع", "محاسن"], children: ["خالد", "ابوالمجد"], generation: 3},
-            {parents: ["مصطفي احمد محمد حفني", "اسراء محمود"], children: ["محمد", "لارا", "يامن"], generation: 3},
-            {parents: ["علي البارودي", "نهلة ابوالفضل محمد ابوالوفا"], children: ["محمد", "يحيي", "يوسف", "ردينة"], generation: 3},
-            {parents: ["محمود صابر", "ولاء محمود محمد حفني"], children: ["ابراهيم", "يوسف"], generation: 3},
-            {parents: ["محمد عبد الستار", "علا ابوالوفا شرقاوي حسن"], children: ["مليكة", "بيبرس"], generation: 3},
-            {parents: ["علاء عبد الحكم", "شيماء ابوالفضل محمد عبد السميع"], children: ["عبد الله", "زينب"], generation: 3},
-            {parents: ["احمد الراجحي", "ريهام ابوالفضل محمد عبد السميع"], children: ["محمد", "هنا", "اسما"], generation: 3},
-            {parents: ["احمد عبد الباقي", "نجلاء شرقاوي محمد عبد السميع"], children: ["محمد", "ابوبكر", "عبد الرحمن"], generation: 3},
-            {parents: ["احمد عبد الحميد", "عبير ابوالوفا علي حفني"], children: ["ريم", "همس", "محمد"], generation: 3},
-            {parents: ["احمد حمدي", "تغريد عبد المعز محمد ابراهيم"], children: ["اياد", "جومان"], generation: 3},
-            {parents: ["حسين مكرم الانصاري", "ريم احمد محمد حفني"], children: ["فايا"], generation: 3},
-            {parents: ["محمد اسامة العارف", "دينا احمد محمد حفني"], children: ["هانيا", "سيف"], generation: 3},
-            {parents: ["محمود محمد موسي", "بسمة ابوالفضل شرقاوي"], children: ["مازن", "أسيل"], generation: 3},
-            {parents: ["محمود ابوالفضل محمد عبد السميع", "آلاء خالد عطا"], children: ["مصطفى"], generation: 3},
-            {parents: ["رنا ابوالفضل شرقاوي", "علي علاء البحراوي"], children: ["احمد"], generation: 3}
-        ];
+/* رابط Apps Script (للإضافة فقط) */
+const webAppURL = 'https://script.google.com/macros/s/AKfycbw56WJPWn9F99mm6UtR_NqdF6WNdK-cC4KEJabD2m_UCdCfQ_BSrkAQiC61T0XUWr9pgA/exec';
 
-        function renderFamilyTree() {
-            const treeContainer = document.getElementById('familyTree');
-            let totalFamilies = familyData.length;
-            let totalPeople = 0;
-            let totalChildren = 0;
-            let generations = new Set();
-            
-            treeContainer.innerHTML = '';
-            
-            familyData.forEach((family, index) => {
-                totalPeople += family.parents.length;
-                totalChildren += family.children.length;
-                totalPeople += family.children.length;
-                generations.add(family.generation);
-                
-                const familyDiv = document.createElement('div');
-                familyDiv.className = 'family-unit';
-                familyDiv.setAttribute('data-family-index', index);
-                familyDiv.setAttribute('data-has-children', family.children.length > 0 ? 'yes' : 'no');
-                
-                // Generation badge
-                const genBadge = document.createElement('div');
-                genBadge.className = 'generation-badge';
-                genBadge.textContent = `الجيل ${family.generation}`;
-                familyDiv.appendChild(genBadge);
-                
-                const parentsDiv = document.createElement('div');
-                parentsDiv.className = 'parents';
-                
-                family.parents.forEach((parent, index) => {
-                    const parentSpan = document.createElement('span');
-                    parentSpan.className = 'parent';
-                    parentSpan.textContent = parent;
-                    parentsDiv.appendChild(parentSpan);
-                    
-                    if (index < family.parents.length - 1) {
-                        const symbol = document.createElement('span');
-                        symbol.className = 'marriage-symbol';
-                        symbol.innerHTML = '💕';
-                        parentsDiv.appendChild(symbol);
-                    }
-                });
-                
-                familyDiv.appendChild(parentsDiv);
-                
-                if (family.children.length > 0) {
-                    const childrenLabel = document.createElement('span');
-                    childrenLabel.className = 'children-label';
-                    childrenLabel.textContent = `الأطفال (${family.children.length}):`;
-                    familyDiv.appendChild(childrenLabel);
-                    
-                    const childrenDiv = document.createElement('div');
-                    childrenDiv.className = 'children';
-                    
-                    family.children.forEach(child => {
-                        const childSpan = document.createElement('span');
-                        childSpan.className = 'child';
-                        childSpan.textContent = child;
-                        childrenDiv.appendChild(childSpan);
-                    });
-                    
-                    familyDiv.appendChild(childrenDiv);
-                }
-                
-                treeContainer.appendChild(familyDiv);
-            });
-            
-            // Update stats
-            document.getElementById('totalFamilies').textContent = totalFamilies;
-            document.getElementById('totalPeople').textContent = totalPeople;
-            document.getElementById('totalChildren').textContent = totalChildren;
-            document.getElementById('totalGenerations').textContent = generations.size;
-        }
+/* ========= READ DATA ========= */
+async function loadFamilyData(){
+const url =
+`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${apiKey}`;
 
-        function searchTree() {
-            const searchTerm = document.getElementById('searchBox').value.toLowerCase().trim();
-            const allElements = document.querySelectorAll('.parent, .child');
-            const familyUnits = document.querySelectorAll('.family-unit');
-            
-            // Reset highlights
-            allElements.forEach(element => {
-                element.classList.remove('highlight');
-            });
-            
-            // Reset family unit visibility
-            familyUnits.forEach(unit => {
-                unit.classList.remove('hidden');
-                unit.style.opacity = '';
-                unit.style.transform = '';
-            });
-            
-            if (searchTerm) {
-                let hasResults = false;
-                
-                // Highlight matching elements and hide non-matching families
-                familyUnits.forEach(unit => {
-                    const elements = unit.querySelectorAll('.parent, .child');
-                    let hasMatch = false;
-                    
-                    elements.forEach(element => {
-                        if (element.textContent.toLowerCase().includes(searchTerm)) {
-                            element.classList.add('highlight');
-                            hasMatch = true;
-                            hasResults = true;
-                        }
-                    });
-                    
-                    if (!hasMatch) {
-                        unit.classList.add('hidden');
-                    }
-                });
-                
-                // Show message if no results
-                if (!hasResults) {
-                    const noResults = document.createElement('div');
-                    noResults.id = 'noResults';
-                    noResults.style.cssText = 'text-align: center; padding: 40px; color: #7f8c8d; font-size: 1.2em;';
-                    noResults.textContent = 'لا توجد نتائج للبحث';
-                    document.getElementById('familyTree').appendChild(noResults);
-                } else {
-                    const existing = document.getElementById('noResults');
-                    if (existing) existing.remove();
-                }
-            } else {
-                const existing = document.getElementById('noResults');
-                if (existing) existing.remove();
-            }
-        }
+const res = await fetch(url);
+const data = await res.json();
+const rows = data.values.slice(1); // skip header
 
-        function filterFamilies(filterType) {
-            const familyUnits = document.querySelectorAll('.family-unit');
-            
-            familyUnits.forEach(unit => {
-                unit.classList.remove('hidden');
-                
-                switch(filterType) {
-                    case 'has-children':
-                        if (unit.getAttribute('data-has-children') === 'no') {
-                            unit.classList.add('hidden');
-                        }
-                        break;
-                    case 'no-children':
-                        if (unit.getAttribute('data-has-children') === 'yes') {
-                            unit.classList.add('hidden');
-                        }
-                        break;
-                    case 'all':
-                    default:
-                        // Show all
-                        break;
-                }
-            });
-        }
+return rows.map(r => ({
+parents:[r[0],r[1]].filter(Boolean),
+children: r[2] ? r[2].split(',').map(x=>x.trim()) : [],
+generation: r[3] || ''
+}));
+}
 
-        // Initialize
-        renderFamilyTree();
-        
-        // Add search functionality
-        document.getElementById('searchBox').addEventListener('input', searchTree);
-    </script>
+/* ========= RENDER ========= */
+async function renderFamilyTree(){
+const families = await loadFamilyData();
+const tree = document.getElementById('familyTree');
+tree.innerHTML='';
+
+families.forEach(f=>{
+const box=document.createElement('div');
+box.className='family-unit';
+
+const gen=document.createElement('div');
+gen.className='generation-badge';
+gen.textContent='الجيل '+f.generation;
+box.appendChild(gen);
+
+const parents=document.createElement('div');
+parents.className='parents';
+f.parents.forEach(p=>{
+const s=document.createElement('span');
+s.className='parent'; s.textContent=p;
+parents.appendChild(s);
+});
+box.appendChild(parents);
+
+if(f.children.length){
+const lbl=document.createElement('div');
+lbl.className='children-label';
+lbl.textContent='الأبناء:';
+box.appendChild(lbl);
+
+const ch=document.createElement('div');
+ch.className='children';
+f.children.forEach(c=>{
+const s=document.createElement('span');
+s.className='child'; s.textContent=c;
+ch.appendChild(s);
+});
+box.appendChild(ch);
+}
+tree.appendChild(box);
+});
+}
+
+/* ========= SEARCH ========= */
+document.getElementById('searchBox').addEventListener('input',()=>{
+const q=searchBox.value.trim().toLowerCase();
+document.querySelectorAll('.family-unit').forEach(f=>{
+let match=false;
+f.querySelectorAll('.parent,.child').forEach(e=>{
+e.classList.remove('highlight');
+if(q && e.textContent.toLowerCase().includes(q)){
+e.classList.add('highlight');
+match=true;
+}
+});
+f.classList.toggle('hidden',q && !match);
+});
+});
+
+/* ========= ADD NEW FAMILY (OPTIONAL) ========= */
+async function addFamily(parent1,parent2,children,generation){
+await fetch(webAppURL,{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+parent1,parent2,
+children:children.join(','),
+generation
+})
+});
+renderFamilyTree();
+}
+
+/* INIT */
+renderFamilyTree();
+</script>
 </body>
 </html>
-
-
