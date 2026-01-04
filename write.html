@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إضافة شجرة العائلة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Tajawal', Arial, sans-serif;
+      background: linear-gradient(135deg, #eef5f9, #d9e8f2);
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #2c3e50;
+      font-weight: 700;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      margin: 10px 0;
+      border: 1px solid #cbd5e0;
+      border-radius: 10px;
+      font-family: 'Tajawal', Arial, sans-serif;
+      font-size: 16px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      font-family: 'Tajawal', Arial, sans-serif;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    #status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 500;
+      text-align: center;
+      display: none;
+    }
+
+    #status.success {
+      background: #d4edda;
+      color: #155724;
+      display: block;
+    }
+
+    #status.error {
+      background: #f8d7da;
+      color: #721c24;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>إضافة عائلة جديدة</h2>
+    <input type="text" id="parent1" placeholder="الوالد 1" />
+    <input type="text" id="parent2" placeholder="الوالد 2" />
+    <textarea id="children" placeholder="الأطفال (افصل بين الأسماء بفواصل)"></textarea>
+
+    <select id="generation">
+      <option value="">اختر الجيل</option>
+      <option value="1">جيل 1</option>
+      <option value="2">جيل 2</option>
+      <option value="3">جيل 3</option>
+      <option value="4">جيل 4</option>
+      <option value="5">جيل 5</option>
+      <option value="6">جيل 6</option>
+    </select>
+
+    <button onclick="addFamily()">إضافة للعائلة</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    function addFamily() {
+      const parent1 = document.getElementById('parent1').value.trim();
+      const parent2 = document.getElementById('parent2').value.trim();
+      const childrenInput = document.getElementById('children').value.trim();
+      const children = childrenInput
+        ? childrenInput.split(',').map(c => c.trim()).filter(c => c)
+        : [];
+      const generationValue = document.getElementById('generation').value;
+
+      const statusEl = document.getElementById('status');
+      statusEl.className = '';
+      statusEl.style.display = 'none';
+
+      if (!parent1 || !parent2 || !generationValue) {
+        statusEl.textContent = "يرجى ملء جميع الحقول المطلوبة.";
+        statusEl.className = 'error';
+        return;
+      }
+
+      // ⬇️ هنا نُنشئ النص "جيل X" ليُرسل كنص إلى Google Sheets
+      const generationText = `جيل ${generationValue}`;
+
+      const data = {
+        sheetName: "Nagahamadi",
+        values: [[parent1, parent2, children.join(", "), generationText]]
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbw56WJPWn9F99mm6UtR_NqdF6WNdK-cC4KEJabD2m_UCdCfQ_BSrkAQiC61T0XUWr9pgA/exec", {
+        method: "POST",
+        body: "data=" + encodeURIComponent(JSON.stringify(data)),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.success) {
+            statusEl.textContent = "تمت الإضافة بنجاح!";
+            statusEl.className = 'success';
+            // مسح الحقول
+            document.getElementById('parent1').value = "";
+            document.getElementById('parent2').value = "";
+            document.getElementById('children').value = "";
+            document.getElementById('generation').value = "";
+          } else {
+            statusEl.textContent = "خطأ: " + (res.message || res.error || "فشل غير معروف");
+            statusEl.className = 'error';
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          statusEl.textContent = "خطأ في الاتصال بالخادم. تأكد من الاتصال بالإنترنت.";
+          statusEl.className = 'error';
+        });
+    }
+  </script>
+</body>
+</html>
